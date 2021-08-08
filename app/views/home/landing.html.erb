@@ -1,0 +1,28 @@
+<h1>Target Recess</h1>
+<p>
+  If you have a TP token, I'll store it in a private cookie
+  and give you some TP for your face holes.
+</p>
+
+<%= form_with(url: '/sessions', method: :post) do |form| %>
+  <%= form.label :tp_token, "Enter your TP token:" %>
+  <%= form.text_field :tp_token %>
+  <%= form.submit "Submit" %>
+<% end %>
+
+<% if @my_stuff %>
+<h2>Your Stuff:</h2>
+<ul>
+<% @my_stuff.each do |item| %>
+    <li>
+      <h3>(<a href="<%= entity_url(item['id']) %>"><%= item['id'] %></a>
+        <%= item.dig('entity_state', 'name') %>)
+      <%= item['name'] %>
+      </h3>
+      <div>
+        <%= entity_desc(item['description']).html_safe %>
+      </div>
+    </li>
+<% end %>
+</ul>
+<% end %>
