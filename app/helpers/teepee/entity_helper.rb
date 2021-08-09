@@ -1,0 +1,2 @@
+module Teepee::EntityHelper
+end

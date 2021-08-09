@@ -1,0 +1,15 @@
+<h1><%= @entity['resourceType'] %>: <%= @entity['name'] %></h1>
+<div><%= entity_desc(@entity['description']).html_safe %></div>
+
+<h2>Comments</h2>
+<ol>
+<% @entity['comments'].reverse.each do |comment| %>
+  <li>
+    <p>
+      <b><%= comment.dig('owner', 'fullName') %></b>
+      <span title="<%= entity_date(comment['createDate']) %>"><%= time_ago_in_words entity_date(comment['createDate']) %> ago</span>
+    </p>
+    <%= entity_desc(comment['description']).html_safe %>
+  </li>
+<% end %>
+</ol>

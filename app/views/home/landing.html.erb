@@ -15,15 +15,12 @@
 <h2>Your Stuff:</h2>
 <ul>
 <% @my_stuff.each do |item| %>
-    <li>
-      <h3>(<a href="<%= entity_url(item['id']) %>"><%= item['id'] %></a>
-        <%= item.dig('entity_state', 'name') %>)
+  <li><b>(<a href="<%= entity_url(item['id']) %>"><%= item['id'] %></a>
+      <%= item.dig('entity_state', 'name') %>
+      <%= item['resourceType'] %>)</b>
       <%= item['name'] %>
-      </h3>
-      <div>
-        <%= entity_desc(item['description']).html_safe %>
-      </div>
-    </li>
+      <%= link_to "#{item.dig('comments', 'count')} Comments", teepee_entity_path(item['id']) %>
+  </li>
 <% end %>
 </ul>
 <% end %>

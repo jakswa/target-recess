@@ -3,7 +3,8 @@
 class Teepee
   BASE_URI = "https://#{ENV.fetch('TP_DOMAIN')}"
   MY_UNFINAL = '?AssignedUser.Where(it is Me) and EntityState.IsFinal != True'
-  BASIC_SELECT = "{id,name,description,entity_state:{EntityState.name}}"
+  BASIC_SELECT = '{id,name,lastCommentDate,comments:{comments.count()},resourceType,entity_state:{EntityState.name}}'
+  DETAILED_SELECT = '{id,name,resourceType,description,comments:comments.Select({id,description,createDate,owner})}'
 
   def initialize(token)
     @token = token
@@ -14,6 +15,11 @@ class Teepee
       filter: MY_UNFINAL,
       select: BASIC_SELECT
     res['items']
+  end
+
+  def entity(id)
+    res = get_json "/api/v2/Assignable/#{id}", select: DETAILED_SELECT
+    res['items']&.first
   end
 
   private
